@@ -71,6 +71,30 @@ func f(from string) {
 	}
 }
 
+func channel_test() {
+	messages := make(chan string)
+
+	go func() {
+		messages <- "ping1"
+		messages <- "ping2"
+	}()
+
+	msg := <-messages
+	fmt.Println(msg)
+	msg = <-messages
+	fmt.Println(msg)
+}
+
+func buffered_channel_test() {
+	messages := make(chan string, 2)
+
+	messages <- "buffered"
+	messages <- "channel"
+
+	fmt.Println(<-messages)
+	fmt.Println(<-messages)
+}
+
 func main() {
 	fmt.Println("go" + "lang")
 	switch_test()
@@ -97,4 +121,7 @@ func main() {
 
 	time.Sleep(time.Second)
 	fmt.Println("done")
+
+	channel_test()
+	buffered_channel_test()
 }
