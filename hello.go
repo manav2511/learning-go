@@ -58,8 +58,43 @@ func switch_test() {
 	whatAmI("hey")
 }
 
+func fact(n int) int {
+	if n == 0 {
+		return 1
+	}
+	return n * fact(n-1)
+}
+
+func f(from string) {
+	for i := 0; i < 3; i++ {
+		fmt.Println(from, ":", i)
+	}
+}
+
 func main() {
 	fmt.Println("go" + "lang")
 	switch_test()
 
+	fmt.Println(fact(7))
+	var fib func(n int) int
+
+	fib = func(n int) int {
+		if n < 2 {
+			return n
+		}
+		return fib(n-1) + fib(n-2)
+	}
+
+	fmt.Println(fib(7))
+
+	f("direct")
+
+	go f("goroutine")
+
+	go func(msg string) {
+		fmt.Println(msg)
+	}("going")
+
+	time.Sleep(time.Second)
+	fmt.Println("done")
 }
